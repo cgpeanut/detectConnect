@@ -1,5 +1,5 @@
 # README.md
-PowerShell script that creates an inventory, IP and detects whether an agent is  connected via Wired, Wireless (WiFi) or both.
+PowerShell script that creates an inventory and detects whether an agent is  connected via Wired, Wireless (WiFi) or both.
 After it collects that information, it is outputted to a CSV file. It will first check the CSV file (if it exists) to see if the hostname already exists in the file. 
 If hostname exists in the CSV file, it will overwrite it with the latest information so that the inventory is up to date and there is no duplicate information.
 It is designed to be run as a login script and/or a scheduled/immediate task run by a domain user. Elevated privileges are not required.
