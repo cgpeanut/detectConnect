@@ -26,7 +26,7 @@ Note: If you want the script to output the result as a task sequence variable in
 
 * The utility will display the Creation Date,  Hostname, User, Serial Number/Service Tag, and Connection Type. (done)
 * The utility has been tested running on Windows 10 (done)
-* The utility can display the results as either a CSV file.
+* The utility can display the results as either a CSV file. (done) 
 
 ### Generating A Password File
 
@@ -37,8 +37,11 @@ Please note: This is only required if you need to authenticate to the SMTP serve
 ``` powershell
 
 $creds = Get-Credential
-$creds.Password | ConvertFrom-SecureString | Set-Content c:\scripts\ps-script-pwd.txt
-```
+$creds.Password | ConvertFrom-SecureString | Set-Content c:\scripts\ps-script-pwd.txt (make sure your path is set)
 After running the commands, you will have a text file containing the encrypted password. When configuring the -Pwd switch enter the path and file name of this file.
 
+# Configuration
 
+Here’s a list of all the command line switches and example configurations.
+
+The path to a TXT file containing the netbios names of the Agents computers you wish to check.
