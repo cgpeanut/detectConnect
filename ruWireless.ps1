@@ -1,11 +1,8 @@
-
-
-
 ## CSV File Location (If this doesn't exist, the script will attempt to create it. Users will need full control of the file.)
-$csv = "$pwd\Inventory.csv"
+$csv = "$pwd\ruWireless.csv"
 
 ## Error log path (Optional but recommended. If this doesn't exist, the script will attempt to create it. Users will need full control of the file.)
-$ErrorLogPath = "$pwd\PowerShell-PC-Inventory-Error-Log.log"
+$ErrorLogPath = "$pwd\PowerShell-PC-ruWireless-Error-Log.log"
 
 Write-Host "Gathering inventory information..."
 

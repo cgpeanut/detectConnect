@@ -37,7 +37,7 @@ Please note: This is only required if you need to authenticate to the SMTP serve
 ``` powershell
 
 $creds = Get-Credential
-$creds.Password | ConvertFrom-SecureString | Set-Content c:\scripts\ps-script-pwd.txt (make sure your path is set)
+$creds.Password | ConvertFrom-SecureString | Set-Content C:\Users\roxasrr\code\detectConnect\ps-script-pwd.txt
 After running the commands, you will have a text file containing the encrypted password. When configuring the -Pwd switch enter the path and file name of this file.
 
 # Configuration
