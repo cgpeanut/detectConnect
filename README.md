@@ -1,0 +1,1 @@
+https://www.deploymentresearch.com/detecting-wired-wireless-and-vpn-connections-using-powershell/
