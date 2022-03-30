@@ -16,3 +16,4 @@ Virtual Box
 Update:  replaced the various where-object lines I had with -Filter
 
 Note: If you want the script to output the result as a task sequence variable in ConfigMgr, in this case setting the results as the TSConnectionType variable, simply change the last line to these lines:
+
