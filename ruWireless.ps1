@@ -7,10 +7,10 @@ $ErrorLogPath = "$pwd\PowerShell-PC-ruWireless-Error-Log.log"
 Write-Host "Gathering inventory information..."
 
 # Date
-$Date = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+$Date = Get-Date -Format "yyyy-MM-dd HH:mm:ss" #done
 
 # Serial Number
-$SN = Get-WmiObject -Class Win32_Bios | Select-Object -ExpandProperty SerialNumber
+$SN = Get-WmiObject -Class Win32_Bios | Select-Object -ExpandProperty SerialNumber #
 
 # Username
 $Username = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
