@@ -25,10 +25,10 @@ Note: If you want the script to output the result as a task sequence variable in
 * The utility will display the Creation Date,  Hostname, User, Serial Number/Service Tag, and Connection Type. (done)
 * The utility has been tested running on Windows 10 (done)
 * The utility can display the results as either a CSV file. (done) 
-* look thru the computer list and check if online or not
-* check for uptime for each computer
-* added as input a list of computers to query
-* added html output for realtime status report (for dashboard implementation)
+* look thru the computer list and check if online or not (in progress)
+* check for uptime for each computer (done)
+* added as input a list of computers to query (in progress)
+* added html output for realtime status report (for dashboard implementation) (in progress)
 
 ### Generating A Password File
 
