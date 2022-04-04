@@ -146,10 +146,58 @@ Do
             SN = $SN
             Username = $Username
             ConnectionType = $ConnectionType
-            
+
 	    }
 
-        ###
+####
+
+# Detecting PowerShell version, and call the best cmdlets
+if ($PSVersionTable.PSVersion.Major -gt 2)
+{
+    # Using Get-CimInstance for PowerShell version 3.0 and higher
+    $WirelessAdapters =  Get-CimInstance -Namespace "root\WMI" -Class MSNdis_PhysicalMediumType -Filter `
+        'NdisPhysicalMediumType = 9'
+    $WiredAdapters = Get-CimInstance -Namespace "root\WMI" -Class MSNdis_PhysicalMediumType -Filter `
+        "NdisPhysicalMediumType = 0 and `
+        (NOT InstanceName like '%pangp%') and `
+        (NOT InstanceName like '%cisco%') and `
+        (NOT InstanceName like '%juniper%') and `
+        (NOT InstanceName like '%vpn%') and `
+        (NOT InstanceName like 'Hyper-V%') and `
+        (NOT InstanceName like 'VMware%') and `
+        (NOT InstanceName like 'VirtualBox Host-Only%')"
+    $ConnectedAdapters =  Get-CimInstance -Class win32_NetworkAdapter -Filter `
+        'NetConnectionStatus = 2'
+    $VPNAdapters =  Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter `
+        "Description like '%pangp%' `
+        or Description like '%cisco%'  `
+        or Description like '%juniper%' `
+        or Description like '%vpn%'"
+}
+else
+{
+    # Needed this script to work on PowerShell 2.0 (don't ask)
+    $WirelessAdapters = Get-WmiObject -Namespace "root\WMI" -Class MSNdis_PhysicalMediumType -Filter `
+        'NdisPhysicalMediumType = 9'
+    $WiredAdapters = Get-WmiObject -Namespace "root\WMI" -Class MSNdis_PhysicalMediumType -Filter `
+        "NdisPhysicalMediumType = 0 and `
+        (NOT InstanceName like '%pangp%') and `
+        (NOT InstanceName like '%cisco%') and `
+        (NOT InstanceName like '%juniper%') and `
+        (NOT InstanceName like '%vpn%') and `
+        (NOT InstanceName like 'Hyper-V%') and `
+        (NOT InstanceName like 'VMware%') and `
+        (NOT InstanceName like 'VirtualBox Host-Only%')"
+    $ConnectedAdapters = Get-WmiObject -Class win32_NetworkAdapter -Filter `
+        'NetConnectionStatus = 2'
+    $VPNAdapters = Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter `
+        "Description like '%pangp%' `
+        or Description like '%cisco%'  `
+        or Description like '%juniper%' `
+        or Description like '%vpn%'"
+}
+
+####
 
         Foreach($Adapter in $ConnectedAdapters) {
             If($WirelessAdapters.InstanceName -contains $Adapter.Name)
@@ -177,8 +225,6 @@ Do
         If(($WirelessConnected -eq $true) -and ($WiredConnected -ne $true)){$ConnectionType="WIRELESS"}
         If($VPNConnected -eq $true){$ConnectionType="VPN"}
         
-        ###
-
         ## Clear the variables after obtaining and storing the results, otherwise data is duplicated.
         If ($ServerListFinal)
         {
@@ -379,10 +425,11 @@ Do
 
                 Else
                 {
-                    $HTML += "<td><div class=$CssError><font color=#$Red>$($Entry.Username)</font></div></td>"
+                   # $HTML += "<td><div class=$CssError><font color=#$Red>$($Entry.Username)</font></div></td>"
                 }
 
-                If ($Entry.Status -eq $True)
+                ###
+                If ($Entry.Status -eq $true)
                 {
                     $HTML += "<td><div class=$CssFormat><font color=#$Green>$($Entry.ConnectionType)</font></div></td>"
                 }
@@ -391,6 +438,7 @@ Do
                 {
                     $HTML += "<td><div class=$CssError><font color=#$Red>$($Entry.ConnectionType)</font></div></td>"
                 }
+                ###
 
                 If ($Null -ne $Entry.CpuUsage)
                 {
