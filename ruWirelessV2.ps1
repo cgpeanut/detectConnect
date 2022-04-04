@@ -173,7 +173,7 @@ Do
         If(($WirelessConnected -ne $true) -and ($WiredConnected -eq $true)){ $ConnectionType="WIRED"}
         If(($WirelessConnected -eq $true) -and ($WiredConnected -eq $true)){$ConnectionType="WIRED AND WIRELESS"}
         If(($WirelessConnected -eq $true) -and ($WiredConnected -ne $true)){$ConnectionType="WIRELESS"}
-        #If($VPNConnected -eq $true){$ConnectionType="VPN"}
+        If($VPNConnected -eq $true){$ConnectionType="VPN"}
         
 
         ###
