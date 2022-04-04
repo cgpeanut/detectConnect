@@ -145,6 +145,8 @@ Do
             DateCollected = $DateCollected
             SN = $SN
             Username = $Username
+            ConnectionType = $ConnectionType
+            
 	    }
 
         ###
@@ -175,7 +177,6 @@ Do
         If(($WirelessConnected -eq $true) -and ($WiredConnected -ne $true)){$ConnectionType="WIRELESS"}
         If($VPNConnected -eq $true){$ConnectionType="VPN"}
         
-
         ###
 
         ## Clear the variables after obtaining and storing the results, otherwise data is duplicated.
@@ -234,6 +235,11 @@ Do
            Clear-Variable Username
        }
 
+      if($ConnectionType)
+      {
+        Clear-Variable ConnectionType
+      }
+
     }
 
     ## If there is a result put the report together.
@@ -246,7 +252,7 @@ Do
             {
                 If ($Entry.Status -eq $True)
                 {
-                    Add-Content -Path "$OutputFile" -Value "$($Entry.DateCollected),$($Entry.ServerName),$($Entry.SN),$($Entry.Username),Online,CPU: $($Entry.CpuUsage),Mem: $($Entry.MemUsage),$($Entry.DiskUsage),$($Entry.Uptime)"
+                    Add-Content -Path "$OutputFile" -Value "$($Entry.DateCollected),$($Entry.ServerName),$($Entry.SN),$($Entry.Username),$($Entry.ConnectionType),Online,CPU: $($Entry.CpuUsage),Mem: $($Entry.MemUsage),$($Entry.DiskUsage),$($Entry.Uptime)"
                 }
 
                 Else
@@ -374,6 +380,16 @@ Do
                 Else
                 {
                     $HTML += "<td><div class=$CssError><font color=#$Red>$($Entry.Username)</font></div></td>"
+                }
+
+                If ($Entry.Status -eq $True)
+                {
+                    $HTML += "<td><div class=$CssFormat><font color=#$Green>$($Entry.ConnectionType)</font></div></td>"
+                }
+
+                Else
+                {
+                    $HTML += "<td><div class=$CssError><font color=#$Red>$($Entry.ConnectionType)</font></div></td>"
                 }
 
                 If ($Null -ne $Entry.CpuUsage)
