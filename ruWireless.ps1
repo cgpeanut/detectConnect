@@ -15,11 +15,40 @@ $SN = Get-WmiObject -Class Win32_Bios | Select-Object -ExpandProperty SerialNumb
 # Username
 $Username = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 
+##
+Foreach($Adapter in $ConnectedAdapters) {
+  If($WirelessAdapters.InstanceName -contains $Adapter.Name)
+  {
+      $WirelessConnected = $true
+  }
+}
+
+Foreach($Adapter in $ConnectedAdapters) {
+  If($WiredAdapters.InstanceName -contains $Adapter.Name)
+  {
+      $WiredConnected = $true
+  }
+}
+
+Foreach($Adapter in $ConnectedAdapters) {
+  If($VPNAdapters.Index -contains $Adapter.DeviceID)
+  {
+      $VPNConnected = $true
+  }
+}
+
+If(($WirelessConnected -ne $true) -and ($WiredConnected -eq $true)){ $ConnectionType="WIRED"}
+If(($WirelessConnected -eq $true) -and ($WiredConnected -eq $true)){$ConnectionType="WIRED AND WIRELESS"}
+If(($WirelessConnected -eq $true) -and ($WiredConnected -ne $true)){$ConnectionType="WIRELESS"}
+If($VPNConnected -eq $true){$ConnectionType="VPN"}
+
+##
+
+
+
 #Get Connection Type
 $WirelessConnected = $null
 $WiredConnected = $null
-
-
 
 # Detecting PowerShell version, and call the best cmdlets
 if ($PSVersionTable.PSVersion.Major -gt 2)
